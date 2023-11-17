@@ -1,5 +1,5 @@
+import handleSuggestionClick from "./search-dropdown/search-dropdown";
+import renderSearchSuggestions from "./search/search-input";
 import displaySelectedRepo from "./selected-repos/selected-repos";
 
-export default {
-  displaySelectedRepo
-};
+export { renderSearchSuggestions, handleSuggestionClick, displaySelectedRepo };

@@ -35,6 +35,10 @@ const renderSelectedRepo = (arr, repoId) => {
     const selectedRepo = arr.find((repo) => repo.id === parseInt(repoId));
     createRepoCard(selectedRepo);
   }
+  if (allSelected.length > 3) {
+    const firstChild = repos.firstElementChild;
+    repos.removeChild(firstChild);
+  }
 };
 
 export default renderSelectedRepo;

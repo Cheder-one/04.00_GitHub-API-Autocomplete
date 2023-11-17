@@ -1,5 +1,4 @@
 import debounce from "./debounce";
+import toggleDropdown from "./toggleDropdown";
 
-export default {
-  debounce
-};
+export { toggleDropdown, debounce };

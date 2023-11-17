@@ -1,34 +1,24 @@
 import "./index.html";
 import "./styles.scss";
-import useInputDebounce from "./app/hooks/useInputDebounce";
-import renderSelectedRepo from "./app/components/selected-repos/selected-repos";
-
-let fiveRepos = [];
+import { useInputDebounce } from "./app/hooks/index.js";
+import {
+  handleSuggestionClick,
+  renderSearchSuggestions
+} from "./app/components/index.js";
+import toggleDropdown from "./app/utils/toggleDropdown.js";
 
 const searchDropdown = document.querySelector(".search__dropdown");
 const reposInput = document.querySelector(".search__input");
 reposInput.focus();
 
-const addSearchSuggestions = (arr) => {
-  searchDropdown.innerHTML = "";
-  const repoList = arr.reduce((acc, repo) => {
-    acc += `
-      <li class="search__suggest" data-repo_id=${repo.id}>
-        <span>${repo.name}</span>
-      </li>
-    `;
-    return acc;
-  }, "");
-  searchDropdown.insertAdjacentHTML("beforeend", repoList);
-};
+let fiveRepos = [];
 
 //------------- MAIN -------------
 async function getQueriedReps(query) {
   query = query.trim();
 
   if (!query) {
-    searchDropdown.innerHTML = "";
-    searchDropdown.style.display = "none";
+    toggleDropdown();
     return;
   }
   const url = `https://api.github.com/search/repositories?q=${query}`;
@@ -48,7 +38,8 @@ async function getQueriedReps(query) {
     }));
 
     fiveRepos = reposCardData.slice(0, 5);
-    addSearchSuggestions(fiveRepos);
+    renderSearchSuggestions(fiveRepos);
+
     searchDropdown.style.display = "block";
   } catch (err) {
     console.error(err.name);
@@ -62,20 +53,8 @@ const handleInputChange = ({ target }) => {
   getQueriedReps(selectedItem);
 };
 
-const handleSuggestionClick = ({ target }) => {
-  const { dataset } = target;
-
-  if (dataset.repo_id) {
-    renderSelectedRepo(fiveRepos, dataset.repo_id);
-  } else {
-    const liElem = target.closest(".search__suggest");
-    if (liElem) {
-      const repoId = liElem.dataset.repo_id;
-      renderSelectedRepo(fiveRepos, repoId);
-    }
-  }
-};
-
 useInputDebounce(handleInputChange);
 
-searchDropdown.addEventListener("click", handleSuggestionClick);
+searchDropdown.addEventListener("click", (e) =>
+  handleSuggestionClick(e, fiveRepos)
+);
