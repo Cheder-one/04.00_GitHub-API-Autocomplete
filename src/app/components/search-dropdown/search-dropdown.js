@@ -1,7 +1,4 @@
-import { toggleDropdown } from "../../utils";
 import renderSelectedRepo from "../selected-repos/selected-repos";
-
-const reposInput = document.querySelector(".search__input");
 
 const handleSuggestionClick = ({ target }, fiveRepos) => {
   const { dataset } = target;
@@ -15,9 +12,6 @@ const handleSuggestionClick = ({ target }, fiveRepos) => {
       renderSelectedRepo(fiveRepos, repoId);
     }
   }
-
-  reposInput.value = "";
-  toggleDropdown();
 };
 
 export default handleSuggestionClick;
