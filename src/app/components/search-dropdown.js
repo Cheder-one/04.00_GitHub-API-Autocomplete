@@ -1,4 +1,4 @@
-import renderSelectedRepo from "../selected-repos/selected-repos";
+import renderSelectedRepo from "./selected-repos";
 
 const handleSuggestionClick = ({ target }, fiveRepos) => {
   const { dataset } = target;

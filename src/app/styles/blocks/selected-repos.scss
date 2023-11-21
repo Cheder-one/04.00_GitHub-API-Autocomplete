@@ -1,4 +1,7 @@
 .selected-repos {
+  max-height: 300px;
+  overflow: auto;
+
   &__repo-card {
     width: 500px;
     height: 100px;
@@ -12,6 +15,11 @@
 
   &__repo-data {
     @include search-font(22px);
+  }
+
+  &__repo-field {
+    display: block;
+    overflow: hidden;
   }
 
   &__repo-remove {

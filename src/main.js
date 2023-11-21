@@ -1,11 +1,8 @@
+import handleSuggestionClick from "./app/components/search-dropdown";
+import renderSearchSuggestions from "./app/components/search-input";
+import { toggleDropdown, useInputDebounce } from "./app/utils";
 import "./index.html";
 import "./styles.scss";
-import { useInputDebounce } from "./app/hooks/index.js";
-import {
-  handleSuggestionClick,
-  renderSearchSuggestions
-} from "./app/components/index.js";
-import toggleDropdown from "./app/utils/toggleDropdown.js";
 
 const searchDropdown = document.querySelector(".search__dropdown");
 const reposInput = document.querySelector(".search__input");
@@ -13,7 +10,6 @@ reposInput.focus();
 
 let fiveRepos = [];
 
-//------------- MAIN -------------
 async function getQueriedReps(query) {
   query = query.trim();
 
@@ -21,10 +17,12 @@ async function getQueriedReps(query) {
     toggleDropdown();
     return;
   }
-  const url = `https://api.github.com/search/repositories?q=${query}`;
+  const apiURL = "https://api.github.com/search/repositories";
+  const defaultQuery = "&sort=stars&order=desc&per_page=5";
+  const fetchURL = `${apiURL}?q=${query}${defaultQuery}`;
 
   try {
-    const responseValue = await fetch(url);
+    const responseValue = await fetch(fetchURL);
     if (!responseValue.ok) {
       throw new Error("Ошибка запроса!");
     }
@@ -37,7 +35,7 @@ async function getQueriedReps(query) {
       stars: item.stargazers_count
     }));
 
-    fiveRepos = reposCardData.slice(0, 5);
+    fiveRepos = reposCardData;
     renderSearchSuggestions(fiveRepos);
 
     searchDropdown.style.display = "block";
@@ -46,14 +44,13 @@ async function getQueriedReps(query) {
     console.log(err);
   }
 }
-//----------------------------
 
 const handleInputChange = ({ target }) => {
   const selectedItem = target.value;
   getQueriedReps(selectedItem);
 };
 
-useInputDebounce(handleInputChange);
+useInputDebounce(handleInputChange, 400);
 
 searchDropdown.addEventListener("click", (e) =>
   handleSuggestionClick(e, fiveRepos)

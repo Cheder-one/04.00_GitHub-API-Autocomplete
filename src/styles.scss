@@ -1,4 +1,6 @@
 @import "./app/styles/reset";
 @import "./app/styles/var";
 
-@import "./app/components/index";
+@import "./app/./styles/blocks/box.scss";
+@import "./app/./styles/blocks/search.scss";
+@import "./app/./styles/blocks/selected-repos.scss";

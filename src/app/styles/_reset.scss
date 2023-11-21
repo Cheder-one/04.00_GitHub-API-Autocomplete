@@ -34,3 +34,10 @@ ol,
 li {
   list-style: none;
 }
+::-webkit-scrollbar {
+  width: 10px;
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+}

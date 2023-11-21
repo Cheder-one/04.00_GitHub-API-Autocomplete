@@ -1,4 +1,5 @@
-import { toggleDropdown } from "../../utils";
+import removeImg from "../assets/x-lg";
+import { toggleDropdown } from "../utils";
 
 const repos = document.querySelector(".selected-repos");
 const reposInput = document.querySelector(".search__input");
@@ -14,11 +15,7 @@ const createRepoCard = ({ id, name, owner, stars }) => {
         <li class="selected-repos__repo-field">Owner: ${owner}</li>
         <li class="selected-repos__repo-field">Stars: ${stars}</li>
       </ul>
-      <button class="selected-repos__repo-remove">
-      <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="red" class="bi bi-x-lg" viewBox="0 0 16 16">
-        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
-      </svg>
-      </button>
+      <button class="selected-repos__repo-remove">${removeImg}</button>
     </div>
     `
   );
@@ -40,10 +37,6 @@ const renderSelectedRepo = (arr, repoId) => {
 
     reposInput.value = "";
     toggleDropdown();
-  }
-  if (allSelected.length > 3) {
-    const firstChild = repos.firstElementChild;
-    repos.removeChild(firstChild);
   }
 };
 
